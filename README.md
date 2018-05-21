@@ -23,10 +23,10 @@ Github Search Parameter:
 - **search_query**:  after which names should be searched (e.g. `java swing`) //todo
 - **search_location**:  where should be searched (e.g. `description`) //todo
 - **language**:  what project languages should be included (e.g. `java`)
-- **license**:  which [licence](https://help.github.com/articles/licensing-a-repository/) should the project have?
+- **license**:  which [licence](https://help.github.com/articles/licensing-a-repository/) should the project have? //todo
 - **stars**:  how many stars should the projects have?  (e.g. `>100`)
-- **topics**:  which tags should the project have?  (e.g. `parser`)
-- **archived**:  should the project be archieved?  (e.g. `false`)
+- **topics**:  which tags should the project have?  (e.g. `parser`) //todo
+- **archived**:  should the project be archieved?  (e.g. `false`) //todo
 
 ## Run
 `python crawler.py crawler.conf`
