@@ -69,7 +69,7 @@ def build_query():
     """Sorting, Order and Iteration Criteria"""
     if query.endswith('+'):
         query = query[:-1]
-    query += '&sort=stars&order=desc&per_page=1000&page=1'
+    query += '&sort=stars&order=desc&per_page=100&page=1'
 
     return query
 
@@ -85,7 +85,9 @@ def find_projects():
     i = 0
 
     print('total number of projects: ' + str(result['total_count']))
-    print('crawling projects: ' + str(min(count,int(result['total_count']))))
+    print('crawling projects: ' + str(min(1000, min(count,int(result['total_count'])))))
+    if(count > 1000 and int(result['total_count']) > 1000):
+        print('github api provides only the first 1000 results!')
 
     while True:
         """Loop over result pages until there is no 'next page' link."""
