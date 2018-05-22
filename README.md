@@ -30,7 +30,7 @@ Github Search Parameter:
 - **topics**: how many tags should the project have?  (e.g. `>=2`)
 - **archived**: should the project be archieved?  (e.g. `false`)
 
-You have to user your github user name and your own personal created token. If the other parameter are empty in the config file, they won't be considered in the search. Possible values for queries of numbers (e.g. `100`) are: equal `100`, less `<100`, less equal `<=100`, greater `>100`, greater equal `>=100`, range `10..100`, unclosed range `100..*`. The same operators are usable with dates in the form of `YYYY-MM-DD`.
+You have to use your github user name and your own personal token. If the other parameters are empty in the config file, they won't be considered in the search. Possible values for queries of numbers (e.g. `100`) are: equal `100`, less `<100`, less equal `<=100`, greater `>100`, greater equal `>=100`, range `10..100`, unclosed range `100..*`. The same operators are usable with dates in the form of `YYYY-MM-DD`.
 More about [possible values for search parameters](https://help.github.com/articles/searching-repositories/) and the [search for repositories](https://developer.github.com/v3/search/#search-repositories).
 
 ## Run
