@@ -8,7 +8,7 @@ A Python Github crawler for reasearch pruposes. Search criteria can be set in a 
 
 ## Configuration
 Crawler parameter:
-- **user**: your user name
+- **user**: your github user name
 - **token**: your personal created token
 - **make_repo_list**: should all found projects be saved in a txt file in the format "user_name/project_name" (true) or only printed out in the console (false)?
 - **output_file**: path to the output file for project names
@@ -30,11 +30,11 @@ Github Search Parameter:
 - **topics**: how many tags should the project have?  (e.g. `>=2`)
 - **archived**: should the project be archieved?  (e.g. `false`)
 
-If the parameter is empty in the config file, it won't be considered in the search. Possible values for queries of numbers (e.g. `100`) are: equal `100`, less `<100`, less equal `<=100`, greater `>100`, greater equal `>=100`, range `10..100`, unclosed range `100..*`. The same operators are usable with dates in the form of `YYYY-MM-DD`.
+You have to use your github user name and your own personal token. If the other parameters are empty in the config file, they won't be considered in the search. Possible values for queries of numbers (e.g. `100`) are: equal `100`, less `<100`, less equal `<=100`, greater `>100`, greater equal `>=100`, range `10..100`, unclosed range `100..*`. The same operators are usable with dates in the form of `YYYY-MM-DD`.
 More about [possible values for search parameters](https://help.github.com/articles/searching-repositories/) and the [search for repositories](https://developer.github.com/v3/search/#search-repositories).
 
 ## Run
-`python crawler.py crawler.conf`
+`python crawler.py -c crawler.conf`
 
 If you don't give the path to the config file as parameter, the program assumes that the `crawler.conf` file is in the same folder. You can use the config file in this repository as an example. Complete it with your own user, token and search criteria information.
 
