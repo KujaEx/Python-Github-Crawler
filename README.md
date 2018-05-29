@@ -4,16 +4,20 @@ A Python Github crawler for reasearch pruposes. Search criteria can be set in a 
 ## Setup
 - **python**
 - **github token**: [How to create a token](https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/) (it is possible to use the github API without token, but with token it is more flexible)
-- for cloning repositories you need **GitPython** (not implemented yet): `pip install gitpython`
+- some python packages need to be installed: (e.g. simply by `pip install package-name`)
+	- requests
+	- configparser
+	- gitpython
 
 ## Configuration
 Crawler parameter:
 - **user**: your github user name
 - **token**: your personal created token
 - **make_repo_list**: should all found projects be saved in a txt file in the format "user_name/project_name" (true) or only printed out in the console (false)?
-- **output_file**: path to the output file for project names
-- **do_clone**: should projects be cloned with git on harddrive (true) or not (false) (todo)
-- **do_zip**: should current project state be saved as zip on harddrive (true) or not (false)
+- **list_output**: path to the output file for project names
+- **do_clone**: should projects be cloned with git on harddrive (true) or not (false)
+- **clone_output**: path to the directory where the projects have to be cloned
+- **do_zip**: should current project state be saved as zip on harddrive (true) or not (false) //todo
 - **count**: how many projects should be crawled?
 
 Github Search Parameter:
@@ -22,7 +26,7 @@ Github Search Parameter:
 - **fork**: should the project be forked from another one? (e.g. `false` or `only`)
 - **forks**: how many forks should the project have? (e.g. `>5`)
 - **search_query**: after which tags should be searched? (e.g. `swing`) //todo
-- **search_location**: should be searched in name, description or readme? (e.g. `description`)
+- **search_location**: should be searched in name, description or readme? (e.g. `description`) //todo
 - **language**: what project languages should be included (e.g. `java`)
 - **license**: which [licence](https://help.github.com/articles/licensing-a-repository/) should the project have? //todo
 - **stars**: how many stars should the projects have?  (e.g. `>100`)
@@ -53,7 +57,7 @@ square/retrofit
 ## TODO
 - [x] use parameters for search in github api (read from config file)
 - [x] implement project name output in console or text file
-- [ ] implement git clone for projects
+- [x] implement git clone for projects
 - [ ] impement fetching projects as zip
 - [ ] implement all possible search criteria
 

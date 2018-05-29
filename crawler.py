@@ -11,10 +11,10 @@ e-mail: kevin.lang@uni-weimar.de
 import argparse
 import requests
 import json
-import re
 import sys
 import configparser
 from distutils.util import strtobool
+from git import Repo
 
 
 def query(url):
@@ -75,12 +75,11 @@ def build_query():
 
 def find_projects():
     url = build_query()
-
     response = query(url)
     result = json.loads(response.content.decode('utf-8'))
 
-    if make_repo_list and output_file:
-        out = open(output_file, 'w')
+    if make_repo_list and list_output:
+        out = open(list_output, 'w')
 
     i = 0
 
@@ -95,7 +94,7 @@ def find_projects():
             if i < count:
                 i += 1
                 """Save user and repo name as identifier"""
-                if make_repo_list and output_file:
+                if make_repo_list and list_output:
                     out.write(repo['full_name'] + '\n')
                 else:
                     print(repo['full_name'])
@@ -103,8 +102,10 @@ def find_projects():
 
                 """Clone repo"""
                 if do_clone:
-                    # TODO: clone repo
-                    print('TODO: Clone repository "' + repo['full_name'] + '"')
+                    sys.stdout.write('Clone repository "' + repo['full_name'] + '" ...')
+                    sys.stdout.flush()
+                    Repo.clone_from(repo['clone_url'], clone_output + '/' + repo['full_name'])
+                    print('Done')
 
                 """Save zip file of repo"""
                 if do_zip:
@@ -123,17 +124,18 @@ def find_projects():
         else:
             break
 
-    if make_repo_list and output_file:
+    if make_repo_list and list_output:
         out.close()
 
 if __name__ == "__main__":
 
     global token
     global user
-    global repo_list
+    global make_repo_list
+    global list_output
     global do_clone
+    global clone_output
     global do_zip
-    global output_file
     global count
 
     global created
@@ -163,8 +165,9 @@ if __name__ == "__main__":
     token = config['crawler']['token']
     user = config['crawler']['user']
     make_repo_list = bool(strtobool(config['crawler']['make_repo_list']))
-    output_file = config['crawler']['output_file']
+    list_output = config['crawler']['list_output']
     do_clone = bool(strtobool(config['crawler']['do_clone']))
+    clone_output = config['crawler']['clone_output']
     do_zip = bool(strtobool(config['crawler']['do_zip']))
     count = int(config['crawler']['count'])
 
