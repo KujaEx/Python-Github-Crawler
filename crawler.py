@@ -12,9 +12,11 @@ import argparse
 import requests
 import json
 import sys
+import os
 import configparser
 from distutils.util import strtobool
 from git import Repo
+from tqdm import tqdm
 
 
 def query(url):
@@ -32,6 +34,12 @@ def build_query():
     """Searching (default: repositories)"""
     query += 'repositories?q='
 
+    """Search_query criteria (maybe not proper implemented yet)"""
+    if len(search_query) > 0:
+        query += search_query + '+'
+    """Search_in criteria"""
+    if len(search_location) > 0:
+        query += 'in:' + search_location + '+'
     """Stars criteria"""
     if len(stars) > 0:
         query += 'stars:' + stars + '+'
@@ -47,9 +55,6 @@ def build_query():
     """Forks criteria"""
     if len(forks) > 0:
         query += 'forks:' + forks + '+'
-    """Search_in criteria"""
-    if len(search_in) > 0:
-        query += 'in:' + search_in + '+'
     """Language criteria"""
     if len(language) > 0:
         query += 'language:' + language + '+'
@@ -109,8 +114,17 @@ def find_projects():
 
                 """Save zip file of repo"""
                 if do_zip:
-                    # TODO: save zip of repo
-                    print('TODO: Download repository as zip "' + repo['full_name'] + '"')
+                    print('Download repository "' + repo['full_name'] + '" as zip ...')
+                    """Create response for download"""
+                    zip_url = 'https://github.com/' + repo['full_name'] + '/archive/master.zip'
+                    zip_response = requests.get(zip_url, stream=True)
+                    """Create folders if they not exist"""
+                    if not os.path.exists(zip_output + '/' + repo['full_name'].split('/')[0]):
+                        os.makedirs(zip_output + '/' + repo['full_name'].split('/')[0])
+                    """Download with progress bar"""
+                    with open(zip_output + '/' + repo['full_name'] + '.zip', 'wb') as handle:
+                        for data in tqdm(zip_response.iter_content()):
+                            handle.write(data)
 
                 if i % 100 == 0:
                     print(i)
@@ -136,13 +150,15 @@ if __name__ == "__main__":
     global do_clone
     global clone_output
     global do_zip
+    global zip_output
     global count
 
     global created
     global pushed
     global fork
     global forks
-    global search_in
+    global search_query
+    global search_location
     global language
     global license
     global stars
@@ -169,13 +185,15 @@ if __name__ == "__main__":
     do_clone = bool(strtobool(config['crawler']['do_clone']))
     clone_output = config['crawler']['clone_output']
     do_zip = bool(strtobool(config['crawler']['do_zip']))
+    zip_output = config['crawler']['zip_output']
     count = int(config['crawler']['count'])
 
     created = config['github']['created']
     pushed = config['github']['pushed']
     fork = config['github']['fork']
     forks = config['github']['forks']
-    search_in = config['github']['search_in']
+    search_query = config['github']['search_query']
+    search_location = config['github']['search_location']
     language = config['github']['language']
     license = config['github']['license']
     stars = config['github']['stars']
