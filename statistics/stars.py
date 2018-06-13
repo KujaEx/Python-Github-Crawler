@@ -140,9 +140,9 @@ if __name__ == '__main__':
     config = configparser.ConfigParser()
     config.read(args.config)
 
-    token = config['statistics']['token']
-    user = config['statistics']['user']
-    wait = float(config['statistics']['wait'])
+    token = config['crawler']['token']
+    user = config['crawler']['user']
+    wait = float(config['crawler']['wait'])
     stars_min = int(config['stars']['stars_min'])
     stars_max = int(config['stars']['stars_max'])
     stars_output = config['stars']['stars_output']
